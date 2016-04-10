@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<html>
+
+    <head>
+        <title>Translator</title>
+        <link rel="stylesheet" type="text/css" href="styles(1).css">
+        <script>
+            $(document).ready(function(){
+                $("#para").onload(function(){
+                    $("#complete").remove();
+                }); 
+            });
+        
+        </script>
+        <style type="text/css">
+            #google_translate_element {
+  color: transparent;
+  opacity: 0;
+
+}
+
+#google_translate_element a {
+  display: none;
+  opacity: 0;
+}
+div.goog-te-gadget {
+  color: transparent !important;
+  opacity:0;
+}
+select.google_translate_element {
+  color: black;
+  opacity: 0;
+}
+        </style>
+        <script src="jquery-2.2.0.js"></script>
+    </head>
+
+        <body id="complete">
+         <p> visits: {{ visits }}</p>
+        <strong>{{ boldmessage }}</strong><br />
+        <a href="/rango/about/">About</a><br />
+        {% if user.is_authenticated %}
+       
+        {% else %}
+        <a href="/rango/register/">Register Here</a><br />
+        <a href="/rango/login/">Login</a><br />
+        {% endif %}
+    {% block body_block %}
+        
+       
+        <div style="z-index: 1;position: relative;height: 100%;width: 20% border-style: solid 1px;">
+            <section class="webdesigntuts-workshop">
+                <form action="/rango/translate/" method="POST" style="position: absolute; left: 30%;">{% csrf_token %}         
+                    <input type="Search" placeholder="Translate" style="border-radius: 6px; padding: 5px;" name="urlz">
+                    <select name="ops" style="border-radius: 6px; padding: 5px;">
+                      <option value="hindi">Hindi</option>
+                      <option value="marathi">Marathi</option>
+                      <option value="kannada">Kannada</option>
+                      <option value="bengali">Bengali</option>
+                      <option value="malayalam">Malayalam</option>
+                      <option value="gujarati">Gujarati</option>
+                    </select>
+                    <input type="submit" style="border-radius: 6px; padding: 7px;background: black;color: white; " value="Translate">
+                </form>
+            </section>
+
+            {% if response %}
+            {{ response | safe}}
+            {% endif %}
+        </div>
+        
+    {% endblock %}
+        <img src="{% static "images/rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
+        
+    </body>
+
+
+</html>
